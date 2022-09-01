@@ -1,7 +1,13 @@
 /** @type {import('next').NextConfig} */
-export const nextConfig:any = {
+const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
 }
 
 module.exports = nextConfig
+
+module.exports = {
+  images: {
+    domains: ['urlFor(heroBanner.image)'],
+  },
+}
