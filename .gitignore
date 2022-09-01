@@ -14,6 +14,7 @@
 
 # production
 /build
+/sanity-ecommerce
 
 # misc
 .DS_Store
