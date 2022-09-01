@@ -1,4 +1,4 @@
-import BarcodeInput from './BarcodeInput'
+import BarcodeInput from './BarcodeInput.js'
 
 export default {
   name: 'barcode',
