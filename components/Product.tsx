@@ -4,12 +4,14 @@ import Link from 'next/link';
 import { urlFor } from '../lib/client';
 
 interface ProductProp {
-  key: () => void;
+  _id?: any,
+  key: any,
   product: any,
 }
 
 
-const Product = ({ product: { image, name, slug, price } }: ProductProp) => {
+const Product = ({ product }:ProductProp) => {
+  const { image, name, slug, price } =product;
   return (
     <div>
       <Link href={`/product/${slug.current}`}>

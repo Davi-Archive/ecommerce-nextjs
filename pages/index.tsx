@@ -4,7 +4,7 @@ import '../styles/Home.module.scss'
 import { Product, FooterBanner, HeroBanner} from '../components'
 import { client } from '../lib/client'
 
-const Home: NextPage = ({ products, bannerData }) => {
+const Home: NextPage = ({ products, bannerData }:any) => {
   return (
     <>
       <HeroBanner heroBanner={bannerData.length && bannerData[0]} />
