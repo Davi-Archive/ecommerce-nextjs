@@ -1,9 +1,8 @@
-import Stripe from 'stripe';
-
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 export default async function handler(req:any, res:any) {
   if (req.method === 'POST') {
+    console.log(res)
     try {
       const params:any = {
         submit_type: 'pay',
