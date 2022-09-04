@@ -1,8 +1,8 @@
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+const stripe = require('stripe')(process.env.NEXT_PUBLIC_STRIPE_SECRET_KEY);
+
 
 export default async function handler(req:any, res:any) {
   if (req.method === 'POST') {
-    console.log(res)
     try {
       const params:any = {
         submit_type: 'pay',
@@ -13,13 +13,13 @@ export default async function handler(req:any, res:any) {
           { shipping_rate: 'shr_1LePLSKJEbgQpy2wDllmuu6U' },
           { shipping_rate: 'shr_1LePLrKJEbgQpy2w7VbjX5Dk' },
         ],
-        line_items: req.body.cardItems.map((item:any) => {
+        line_items: req.body.map((item:any) => {
           const img = item.image[0].asset._ref;
-          const newImage = img.replace('image-', 'https://cdn.sanity.io/images/9gobbmto/production/').replace('-png','-jpeg','-webp', '.webp');
+          const newImage = img.replace('image-', 'https://cdn.sanity.io/images/9gobbmto/production/').replace('-webp', '.webp');
             console.log('IMAGE', newImage)
           return {
             price_data: {
-              currency: 'usd',
+              currency: 'brl',
               product_data: {
                 name: item.name,
                 images: [newImage],
