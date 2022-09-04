@@ -15,6 +15,6 @@
     "jsx": "preserve",
     "incremental": true
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "sanity-ecommerce/plugins/barcode-input/BarcodeInput.js", "sanity-ecommerce/plugins/barcode-input/BarcodeType.js", "next.config.js", "components/Cart.tsx","./node_modules/@sanity/base/types/**/*.tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "sanity-ecommerce/plugins/barcode-input/BarcodeInput.js", "sanity-ecommerce/plugins/barcode-input/BarcodeType.js", "next.config.js", "components/Cart.tsx","./node_modules/@sanity/base/types/**/*.tsx", "sanity-ecommerce/schemas/product.js", "sanity-ecommerce/schemas/schema.js"],
   "exclude": ["node_modules"]
 }
