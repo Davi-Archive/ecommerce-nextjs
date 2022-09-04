@@ -13,7 +13,11 @@ interface ConstextProp {
     onAdd: any,
     setShowCart: any,
     toggleCartItemQuantity: any,
-    onRemove:any,
+    onRemove: any,
+    setCartItems: any,
+    setTotalPrice: any,
+    setTotalQuantities: any,
+
 }
 
 const Context = createContext({} as ConstextProp);
@@ -62,9 +66,9 @@ export const StateContext = ({ children }: any) => {
         });
     }
 
-    const onRemove = (product:any) => {
+    const onRemove = (product: any) => {
         foundProduct = cartItems.find((item: any) => item._id === product._id)
-        const newCartItems = cartItems.filter((item:any)=> item._id !== product._id)
+        const newCartItems = cartItems.filter((item: any) => item._id !== product._id)
 
         setTotalPrice((prevTotalPrice) => prevTotalPrice = foundProduct.price * foundProduct.quantity);
         setTotalQuantities(prevTotalQuantities => prevTotalQuantities - foundProduct.quantity);
@@ -111,6 +115,9 @@ export const StateContext = ({ children }: any) => {
             setShowCart,
             toggleCartItemQuantity,
             onRemove,
+            setCartItems,
+            setTotalPrice,
+            setTotalQuantities,
         }} >
             {children}
         </Context.Provider>

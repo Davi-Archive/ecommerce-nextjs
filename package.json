@@ -24,6 +24,7 @@
     "stripe": "^10.7.0"
   },
   "devDependencies": {
+    "@types/canvas-confetti": "^1.4.3",
     "@types/node": "18.7.14",
     "@types/react": "18.0.18",
     "@types/react-dom": "18.0.6",
