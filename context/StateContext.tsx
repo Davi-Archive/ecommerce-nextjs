@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect, Children } from 'react'
 import { toast } from 'react-hot-toast'
+import product from '../sanity-ecommerce/schemas/product';
 
 interface ConstextProp {
     showCart: boolean,
@@ -11,6 +12,7 @@ interface ConstextProp {
     decQty: any,
     onAdd: any,
     setShowCart: any,
+    toggleCartItemQuantity: any,
 }
 
 const Context = createContext({} as ConstextProp);
@@ -18,9 +20,12 @@ const Context = createContext({} as ConstextProp);
 export const StateContext = ({ children }: any) => {
     const [showCart, setShowCart] = useState(false);
     const [cartItems, setCartItems] = useState<any>([]);
-    const [totalPrice, setTotalPrice] = useState('');
+    const [totalPrice, setTotalPrice] = useState(0);
     const [totalQuantities, setTotalQuantities] = useState(0);
-    const [qty, setQty] = useState(1);
+    const [qty, setQty] = useState(0);
+
+    let foundProduct: any;
+    let index:number;
 
     const onAdd = (product: any, quantity: any) => {
         const checkProductInCart = cartItems.find((item: any): any => item?._id === product._id)
@@ -39,7 +44,7 @@ export const StateContext = ({ children }: any) => {
             setCartItems(updatedCartItems);
         } else {
             product.quantity = quantity;
-            setCartItems([...cartItems, {...product}])
+            setCartItems([...cartItems, { ...product }])
         }
         toast.success(`${qty} ${product.name} adicionado ao carrinho de compras.`)
     }
@@ -56,6 +61,34 @@ export const StateContext = ({ children }: any) => {
         });
     }
 
+    const toggleCartItemQuantity = (id: any, value: any) => {
+        foundProduct = cartItems.find((item: any) => item._id === id)
+        index = cartItems.findIndex((product: any) => product._id === id);
+
+        if (value === 'inc') {
+            setCartItems([...cartItems, {
+                ...foundProduct,
+                quantity: foundProduct?.quantity + 1
+            }]);
+            setTotalPrice((prevTotalPrice: any) => prevTotalPrice +
+                foundProduct.price)
+            setTotalQuantities(prevTotalQuantities => prevTotalQuantities + 1)
+        } else if (value === 'dec') {
+            if (foundProduct.quantity > 1) {
+
+
+                setCartItems([...cartItems, {
+                    ...foundProduct,
+                    quantity: foundProduct?.quantity - 1
+                }]);
+                setTotalPrice((prevTotalPrice: any) => prevTotalPrice -
+                    foundProduct.price)
+                setTotalQuantities(prevTotalQuantities => prevTotalQuantities - 1)
+            }
+        }
+
+    }
+
 
     return (
         <Context.Provider value={{
@@ -68,6 +101,7 @@ export const StateContext = ({ children }: any) => {
             decQty,
             onAdd,
             setShowCart,
+            toggleCartItemQuantity,
         }} >
             {children}
         </Context.Provider>
