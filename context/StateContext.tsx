@@ -13,6 +13,7 @@ interface ConstextProp {
     onAdd: any,
     setShowCart: any,
     toggleCartItemQuantity: any,
+    onRemove:any,
 }
 
 const Context = createContext({} as ConstextProp);
@@ -25,7 +26,7 @@ export const StateContext = ({ children }: any) => {
     const [qty, setQty] = useState(0);
 
     let foundProduct: any;
-    let index:number;
+    let index: number;
 
     const onAdd = (product: any, quantity: any) => {
         const checkProductInCart = cartItems.find((item: any): any => item?._id === product._id)
@@ -61,11 +62,20 @@ export const StateContext = ({ children }: any) => {
         });
     }
 
+    const onRemove = (product:any) => {
+        foundProduct = cartItems.find((item: any) => item._id === product._id)
+        const newCartItems = cartItems.filter((item:any)=> item._id !== product._id)
+
+        setTotalPrice((prevTotalPrice) => prevTotalPrice = foundProduct.price * foundProduct.quantity);
+        setTotalQuantities(prevTotalQuantities => prevTotalQuantities - foundProduct.quantity);
+        setCartItems(newCartItems)
+    }
+
     const toggleCartItemQuantity = (id: any, value: any) => {
         foundProduct = cartItems.find((item: any) => item._id === id)
         index = cartItems.findIndex((product: any) => product._id === id);
 
-        const newCartItems = cartItems.filter((item:any)=> item._id !== id)
+        const newCartItems = cartItems.filter((item: any) => item._id !== id)
 
         if (value === 'inc') {
             setCartItems([...newCartItems, {
@@ -77,7 +87,7 @@ export const StateContext = ({ children }: any) => {
         } else if (value === 'dec') {
             if (foundProduct.quantity > 1) {
                 setCartItems([...newCartItems, {
-                    ...foundProduct, quantity: foundProduct.quantity - 1 
+                    ...foundProduct, quantity: foundProduct.quantity - 1
                 }]);
                 setTotalPrice((prevTotalPrice: any) => prevTotalPrice -
                     foundProduct.price)
@@ -100,6 +110,7 @@ export const StateContext = ({ children }: any) => {
             onAdd,
             setShowCart,
             toggleCartItemQuantity,
+            onRemove,
         }} >
             {children}
         </Context.Provider>

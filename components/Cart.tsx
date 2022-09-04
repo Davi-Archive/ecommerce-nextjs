@@ -17,7 +17,7 @@ import { urlFor } from '../lib/client';
 
 const Cart = () => {
   const cartRef = useRef() as RefObject<HTMLDivElement>;
-  const { toggleCartItemQuantity, totalPrice, totalQuantities, cartItems, setShowCart } = useStateContext();
+  const { onRemove, toggleCartItemQuantity, totalPrice, totalQuantities, cartItems, setShowCart } = useStateContext();
   return (
     <div className='cart-wrapper' ref={cartRef}>
       <div className='cart-container'>
@@ -68,7 +68,7 @@ const Cart = () => {
                         <AiOutlineMinus />
                       </span>
                       <span className='num' >
-                       {item.quantity}
+                        {item.quantity}
                       </span>
                       <span
                         className='plus'
@@ -81,6 +81,7 @@ const Cart = () => {
                   <button
                     type='button'
                     className='remove-item'
+                    onClick={() => onRemove(item)}
                   >
                     <TiDeleteOutline />
                   </button>
