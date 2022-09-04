@@ -1,21 +1,23 @@
+import Stripe from 'stripe';
+
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 export default async function handler(req:any, res:any) {
   if (req.method === 'POST') {
-    console.log(req.body.cartItems)
     try {
-      const params = {
+      const params:any = {
         submit_type: 'pay',
         mode: 'payment',
         payment_method_types: ['card'],
         billing_address_collection: 'auto',
         shipping_options: [
-          { shipping_rate: 'shr_1Kn3IaEnylLNWUqj5rqhg9oV' },
+          { shipping_rate: 'shr_1LePLSKJEbgQpy2wDllmuu6U' },
+          { shipping_rate: 'shr_1LePLrKJEbgQpy2w7VbjX5Dk' },
         ],
-        line_items: req.body.map((item:any) => {
+        line_items: req.body.cardItems.map((item:any) => {
           const img = item.image[0].asset._ref;
-          const newImage = img.replace('image-', 'https://cdn.sanity.io/images/vfxfwnaw/production/').replace('-webp', '.webp');
-
+          const newImage = img.replace('image-', 'https://cdn.sanity.io/images/9gobbmto/production/').replace('-png','-jpeg','-webp', '.webp');
+            console.log('IMAGE', newImage)
           return {
             price_data: {
               currency: 'usd',
