@@ -26,7 +26,7 @@ export const StateContext = ({ children }: any) => {
     const [showCart, setShowCart] = useState(false);
     const [cartItems, setCartItems] = useState<any>([]);
     const [totalPrice, setTotalPrice] = useState(0);
-    const [totalQuantities, setTotalQuantities] = useState(0);
+    const [totalQuantities, setTotalQuantities] = useState(1);
     const [qty, setQty] = useState(0);
 
     let foundProduct: any;
