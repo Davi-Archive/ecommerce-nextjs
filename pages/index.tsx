@@ -9,7 +9,7 @@ const Home: NextPage = ({ products, bannerData }:any) => {
     <>
       <HeroBanner heroBanner={bannerData.length && bannerData[0]} />
       <div className='products-heading'>
-        <h2>Best Selling Products</h2>
+        <h2>Produtos que mais Vendem</h2>
       </div>
 
       <div className="products-container">

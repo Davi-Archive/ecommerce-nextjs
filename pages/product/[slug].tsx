@@ -1,107 +1,90 @@
-import React, { useState } from 'react'
-import {
-  AiOutlineMinus,
-  AiOutlinePlus,
-  AiFillStar,
-  AiOutlineStar } from 'react-icons/ai';
+import React, { useState } from 'react';
+import { AiOutlineMinus, AiOutlinePlus, AiFillStar, AiOutlineStar } from 'react-icons/ai';
 
 import { client, urlFor } from '../../lib/client';
 import { Product } from '../../components';
-import { useStateContext } from '../../context/StateContext'
+import { useStateContext } from '../../context/StateContext';
 
-
-const ProductDetails = ({ product, products }: any) => {
+const ProductDetails = ({ product, products }:any) => {
   const { image, name, details, price } = product;
   const [index, setIndex] = useState(0);
-  const { decQty, incQty, qty, onAdd } = useStateContext();
+  const { decQty, incQty, qty, onAdd, setShowCart } = useStateContext();
 
-  function teste() {
-    console.log('click');
+  const handleBuyNow = () => {
+    onAdd(product, qty);
+
+    setShowCart(true);
   }
+
   return (
     <div>
-      <div className='product-detail-container'>
+      <div className="product-detail-container">
         <div>
-          <div className='image-container'>
+          <div className="image-container">
             <picture>
-              <img
-              className='product-detail-image'
-              src={urlFor(image && image[index])}
-              alt={name} />
+              <img src={urlFor(image && image[index])} className="product-detail-image" alt='imagem' />
             </picture>
           </div>
-          <div className='small-image-container'>
-            {image?.map((item:any, i:any) => (
+          <div className="small-images-container">
+            {image?.map((item: any, i: any) => (
               <picture key={i}>
-                <img src={urlFor(item)}
-                className={i === index ? 'small-image selected-image':'small-image'}
-                onMouseEnter={()=> setIndex(i)}
-                alt={name}
+                <img
+                  key={i}
+                  src={urlFor(item)}
+                  className={i === index ? 'small-image selected-image' : 'small-image'}
+                  onMouseEnter={() => setIndex(i)}
+                  alt='Image do Produto'
                 />
               </picture>
             ))}
           </div>
         </div>
-        <div className='product-details-desc'>
+
+        <div className="product-detail-desc">
           <h1>{name}</h1>
-          <div className='reviews'>
-            <AiFillStar />
-            <AiFillStar />
-            <AiFillStar />
-            <AiFillStar />
-            <AiOutlineStar />
-          </div>
-          <p>
-            (20)
-          </p>
-          <h4>Details: </h4>
-          <p>{details}</p>
-          <p className='price'>${price}</p>
-          <div className='quantity'>
-            <h3>Quantity: </h3>
-            <p className='quantity-desc'>
-              <span className='minus' onClick={decQty}>
-                <AiOutlineMinus />
-              </span>
-              <span className='num' onClick={teste}>
-                {qty}
-              </span>
-              <span className='plus' onClick={incQty}>
-                <AiOutlinePlus />
-              </span>
+          <div className="reviews">
+            <div>
+              <AiFillStar />
+              <AiFillStar />
+              <AiFillStar />
+              <AiFillStar />
+              <AiOutlineStar />
+            </div>
+            <p>
+              (20)
             </p>
           </div>
-          <div className='buttons'>
-            <button type='button'
-              className='add-to-cart'
-              onClick={()=> onAdd(product, qty)}
-            >Adicionar ao Carrinho</button>
-            <button type='button'
-              className='buy-now'
-              onClick={teste}
-            >Compre Agora</button>
+          <h4>Detalhes: </h4>
+          <p>{details}</p>
+          <p className="price">${price}</p>
+          <div className="quantity">
+            <h3>Quantidade:</h3>
+            <p className="quantity-desc">
+              <span className="minus" onClick={decQty}><AiOutlineMinus /></span>
+              <span className="num">{qty}</span>
+              <span className="plus" onClick={incQty}><AiOutlinePlus /></span>
+            </p>
+          </div>
+          <div className="buttons">
+            <button type="button" className="add-to-cart" onClick={() => onAdd(product, qty)}>Adicionar ao Carrinho</button>
+            <button type="button" className="buy-now" onClick={handleBuyNow}>Compre Agora</button>
           </div>
         </div>
       </div>
-      <div className='maylike-products-wrapper'>
-        <h2>You may also like</h2>
-        <div className='marquee'>
-          <div className='maylike-products-container track'>
-              {products?.map((item:any) =>(
-               <>
-               <Product key={item.id} product={item} />
-               </>
-              )
-              )}
+
+      <div className="maylike-products-wrapper">
+        <h2>Você pode gostar</h2>
+        <div className="marquee">
+          <div className="maylike-products-container track">
+            {products.map((item:any) => (
+              <Product key={item._id} product={item} />
+            ))}
           </div>
         </div>
       </div>
     </div>
   )
 }
-
-
-
 
 export const getStaticPaths = async () => {
   const query = `*[_type == "product"]{
