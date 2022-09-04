@@ -1,15 +1,19 @@
 import React, { useState } from 'react'
-
-import { client, urlFor } from '../../lib/client';
-import { AiOutlineMinus,
+import {
+  AiOutlineMinus,
   AiOutlinePlus,
   AiFillStar,
   AiOutlineStar } from 'react-icons/ai';
+
+import { client, urlFor } from '../../lib/client';
 import { Product } from '../../components';
+import { useStateContext } from '../../context/StateContext'
+
 
 const ProductDetails = ({ product, products }: any) => {
   const { image, name, details, price } = product;
   const [index, setIndex] = useState(0);
+  const { decQty, incQty, qty, onAdd } = useStateContext();
 
   function teste() {
     console.log('click');
@@ -56,13 +60,13 @@ const ProductDetails = ({ product, products }: any) => {
           <div className='quantity'>
             <h3>Quantity: </h3>
             <p className='quantity-desc'>
-              <span className='minus' onClick={teste}>
+              <span className='minus' onClick={decQty}>
                 <AiOutlineMinus />
               </span>
               <span className='num' onClick={teste}>
-                0
+                {qty}
               </span>
-              <span className='plus' onClick={teste}>
+              <span className='plus' onClick={incQty}>
                 <AiOutlinePlus />
               </span>
             </p>
@@ -70,7 +74,7 @@ const ProductDetails = ({ product, products }: any) => {
           <div className='buttons'>
             <button type='button'
               className='add-to-cart'
-              onClick={teste}
+              onClick={()=> onAdd(product, qty)}
             >Adicionar ao Carrinho</button>
             <button type='button'
               className='buy-now'
@@ -106,7 +110,7 @@ export const getStaticPaths = async () => {
     }
   }`
   const products = await client.fetch(query);
-  const paths = products.map((product: any) => ({
+  const paths = products?.map((product: any) => ({
     params: {
       slug: product.slug.current,
     }
