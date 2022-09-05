@@ -17,7 +17,7 @@ Abra [http://localhost:3000](http://localhost:3000) no seu navegador para ver o 
 ## Bibliotecas utilizadas
 
 
-<p>-Este projeto foi feito com [Next.js](https://nextjs.org/).</p>
+-Este projeto foi feito com  [Next.js](https://nextjs.org/).
 <p>-Typescript</p>
 <p>-Bootstrap</p>
 <p>-TailwindCSS</p>
