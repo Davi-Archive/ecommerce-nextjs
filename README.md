@@ -17,9 +17,9 @@ Abra [http://localhost:3000](http://localhost:3000) no seu navegador para ver o 
 ## Bibliotecas utilizadas
 
 
--Este projeto foi feito com [Next.js](https://nextjs.org/) .
--Typescript
--Bootstrap
--TailwindCSS
--Stripe
--Sanity
+<p>-Este projeto foi feito com [Next.js](https://nextjs.org/).</p>
+<p>-Typescript</p>
+<p>-Bootstrap</p>
+<p>-TailwindCSS</p>
+<p>-Stripe</p>
+<p>-Sanity</p>
